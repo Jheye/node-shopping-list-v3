@@ -1,4 +1,4 @@
-
+  
 const express = require('express');
 const router = express.Router();
 const morgan = require('morgan');
@@ -9,9 +9,7 @@ const {ShoppingList, Recipes} = require('./models');
 const jsonParser = bodyParser.json();
 const app = express();
 
-// log the http layer
-app.use(morgan('common'));
-
+// log the http layer.
 // we're going to add some items to ShoppingList
 // so there's some data to look at
 ShoppingList.create('beans', 2);
@@ -50,6 +48,12 @@ app.post('/shopping-list', jsonParser, (req, res) => {
 app.delete('/shopping-list/:id', (req, res) => {
   ShoppingList.delete(req.params.id);
   console.log(`Deleted shopping list item \`${req.params.id}\``);
+  res.status(204).end();
+});
+
+app.delete('/recipes/:id', (req, res) => {
+  Recipes.delete(req.params.id);
+  console.log(`Deleted recipe item \`${req.params.id}\``);
   res.status(204).end();
 });
 
